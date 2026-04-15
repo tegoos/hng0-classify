@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Card Component</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .custom-checkbox:checked + .checkbox-visual {
+            background-color: #10b981;
+            border-color: #10b981;
+        }
+
+        .task-card {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+        }
+
+        .task-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .completed-state {
+            opacity: 0.7;
+            background-color: #f1f5f9;
+        }
+
+        .completed-text {
+            text-decoration: line-through;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <article 
+        id="todo-card"
+        data-testid="test-todo-card"
+        class="task-card relative max-w-sm w-full p-6 rounded-[2rem] border border-slate-100 bg-white shadow-sm"
+    >
+        <div class="flex justify-between items-start mb-5">
+            <div class="flex items-center gap-3">
+                <label class="relative flex items-center cursor-pointer">
+                    <input 
+                        id="complete-toggle"
+                        type="checkbox"
+                        data-testid="test-todo-complete-toggle"
+                        class="sr-only peer"
+                    />
+                    <div class="w-6 h-6 border-2 border-slate-200 rounded-full flex items-center justify-center transition-all peer-checked:bg-emerald-500 peer-checked:border-emerald-500">
+                        <svg class="w-4 h-4 text-white opacity-0 peer-checked:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                </label>
+                <span 
+                    id="status-indicator"
+                    data-testid="test-todo-status"
+                    class="text-[11px] font-bold uppercase tracking-widest text-blue-600"
+                >
+                    In Progress
+                </span>
+            </div>
+            
+            <span 
+                data-testid="test-todo-priority"
+                class="px-2.5 py-1 rounded-lg bg-orange-50 text-orange-600 text-[10px] font-bold uppercase tracking-tight"
+            >
+                High Priority
+            </span>
+        </div>
+
+        <div class="mb-6">
+            <h3 
+                id="task-title"
+                data-testid="test-todo-title"
+                class="text-lg font-bold text-slate-900 leading-tight mb-2 transition-all"
+            >
+                Desing HNG14 Front-End Task
+            </h3>
+            <p 
+                data-testid="test-todo-description"
+                class="text-slate-500 text-sm leading-relaxed"
+            >
+                Build a todo card for HNG14 with HTML, CSS & Javascript
+            </p>
+        </div>
+
+        <div class="flex flex-col gap-2 mb-6 p-4 bg-slate-50 rounded-2xl">
+            <div class="flex items-center gap-2 text-slate-600">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                <time 
+                    id="due-date-display"
+                    data-testid="test-todo-due-date"
+                    class="text-xs font-medium"
+                >
+                    </time>
+            </div>
+            <div class="flex items-center gap-2 text-blue-700">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <time 
+                    id="time-remaining-display"
+                    data-testid="test-todo-time-remaining"
+                    class="text-xs font-bold"
+                >
+                    </time>
+            </div>
+        </div>
+
+        <div class="flex justify-between items-center">
+            <div 
+                data-testid="test-todo-tags"
+                class="flex gap-2"
+            >
+                <span data-testid="test-todo-tag-growth" class="text-[10px] font-semibold px-2 py-1 bg-white border border-slate-200 text-slate-600 rounded-md">#Growth</span>
+                <span data-testid="test-todo-tag-beta" class="text-[10px] font-semibold px-2 py-1 bg-white border border-slate-200 text-slate-600 rounded-md">#Beta</span>
+            </div>
+
+            <div class="flex gap-1">
+                <button data-testid="test-todo-edit-button" aria-label="Edit" class="p-2 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-600 transition-colors">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button data-testid="test-todo-delete-button" aria-label="Delete" class="p-2 hover:bg-red-50 rounded-full text-slate-400 hover:text-red-500 transition-colors">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+        </div>
+    </article>
+
+    <script>
+        // Configuration
+        const DUES_DATE = new Date('2026-04-18T15:00:00'); // Example date in 2026
+
+        // Elements
+        const card = document.getElementById('todo-card');
+        const checkbox = document.getElementById('complete-toggle');
+        const title = document.getElementById('task-title');
+        const statusText = document.getElementById('status-indicator');
+        const dateDisplay = document.getElementById('due-date-display');
+        const timeRemainingDisplay = document.getElementById('time-remaining-display');
+
+        // Logic: Update Formatted Date
+        const updateDates = () => {
+            const now = new Date();
+            
+            // Format: Due Feb 18, 2026
+            const dateOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+            dateDisplay.textContent = `Due ${DUES_DATE.toLocaleDateString('en-US', dateOptions)}`;
+
+            // Relative Time Logic
+            const diffMs = DUES_DATE - now;
+            const diffHrs = Math.floor(diffMs / (1000 * 60 * 60));
+            const diffDays = Math.floor(diffHrs / 24);
+
+            let timeStr = "";
+            if (diffMs < 0) {
+                const overdueHrs = Math.abs(diffHrs);
+                timeStr = overdueHrs < 24 ? `Overdue by ${overdueHrs} hours` : `Overdue by ${Math.abs(diffDays)} days`;
+            } else if (diffDays === 0) {
+                timeStr = `Due in ${diffHrs} hours`;
+            } else {
+                timeStr = `Due in ${diffDays} days`;
+            }
+            timeRemainingDisplay.textContent = timeStr;
+        };
+
+        // Logic: Handle Completion Toggle
+        checkbox.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                card.classList.add('completed-state');
+                title.classList.add('completed-text');
+                statusText.textContent = "Completed";
+                statusText.classList.replace('text-blue-600', 'text-emerald-600');
+            } else {
+                card.classList.remove('completed-state');
+                title.classList.remove('completed-text');
+                statusText.textContent = "In Progress";
+                statusText.classList.replace('text-emerald-600', 'text-blue-600');
+            }
+        });
+
+        // Initialize & Run Timer every 60 seconds
+        updateDates();
+        setInterval(updateDates, 60000);
+    </script>
+</body>
+</html>
